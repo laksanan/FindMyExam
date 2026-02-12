@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Inter for modern minimalist look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Active tab indicator */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: black;
+        }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="bg-white text-black antialiased min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b border-gray-200 bg-white sticky top-0 z-50 backdrop-blur-sm bg-white/90">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <a href="/" class="flex items-center">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10 w-auto">
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/"
+                        class="nav-link text-sm font-medium text-gray-600 hover:text-black transition-colors duration-200 {% if request.path == '/' %}active text-black{% endif %}">
+                        Home
+                    </a>
+                    <a href="/about"
+                        class="nav-link text-sm font-medium text-gray-600 hover:text-black transition-colors duration-200 {% if request.path == '/about' %}active text-black{% endif %}">
+                        About
+                    </a>
+                    <a href="/contact"
+                        class="nav-link text-sm font-medium text-gray-600 hover:text-black transition-colors duration-200 {% if request.path == '/contact' %}active text-black{% endif %}">
+                        Contact
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button"
+                    class="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                    aria-label="Toggle menu">
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="py-4 space-y-3 border-t border-gray-200">
+                    <a href="/"
+                        class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-black hover:bg-gray-50 rounded-md transition-colors duration-200 {% if request.path == '/' %}text-black bg-gray-50{% endif %}">
+                        Home
+                    </a>
+                    <a href="/about"
+                        class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-black hover:bg-gray-50 rounded-md transition-colors duration-200 {% if request.path == '/about' %}text-black bg-gray-50{% endif %}">
+                        About
+                    </a>
+                    <a href="/contact"
+                        class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-black hover:bg-gray-50 rounded-md transition-colors duration-200 {% if request.path == '/contact' %}text-black bg-gray-50{% endif %}">
+                        Contact
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {% block content %}
+            <!-- เนื้อหาหลักจะแสดงที่นี่ -->
+            <div class="text-center py-20">
+                <h2 class="text-4xl font-bold mb-4">Welcome</h2>
+                <p class="text-gray-600 text-lg">This is a minimalist template with TailwindCSS</p>
+            </div>
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 bg-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="text-sm text-gray-600">&copy; 2026 My App. All rights reserved.</p>
+
+                <div class="flex space-x-6">
+                    <a href="#"
+                        class="text-sm text-gray-600 hover:text-black transition-colors duration-200">Privacy</a>
+                    <a href="#" class="text-sm text-gray-600 hover:text-black transition-colors duration-200">Terms</a>
+                    <a href="#"
+                        class="text-sm text-gray-600 hover:text-black transition-colors duration-200">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            menuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('open');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

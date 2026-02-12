@@ -1,0 +1,55 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-center">ค้นหาข้อมูลห้องสอบ</h1>
+
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mb-8">
+        <form action="" method="get" class="flex flex-col gap-4">
+            <label for="student_id" class="text-gray-700 font-semibold">รหัสนักศึกษา (Student I.D)</label>
+            <input type="text" name="student_id" id="student_id" placeholder="กรอกรหัสนักศึกษา..."
+                class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value="{{ query }}">
+            <button type="submit"
+                class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">ค้นหา</button>
+        </form>
+    </div>
+
+    {% if error_message %}
+    <div class="text-center text-red-500 font-bold mb-6">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if results %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="py-3 px-4 border-b text-left text-gray-600 font-semibold">รหัสนักศึกษา</th>
+                    <th class="py-3 px-4 border-b text-left text-gray-600 font-semibold">ชื่อ-นามสกุล</th>
+                    <th class="py-3 px-4 border-b text-left text-gray-600 font-semibold">ห้องสอบ</th>
+                    <th class="py-3 px-4 border-b text-left text-gray-600 font-semibold">วิชา</th>
+                    <th class="py-3 px-4 border-b text-left text-gray-600 font-semibold">วันที่</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in results %}
+                <tr class="hover:bg-gray-50 transition duration-150">
+                    <td class="py-3 px-4 border-b text-gray-700 font-medium">{{ student.ID }}</td>
+                    <td class="py-3 px-4 border-b text-gray-700">{{ student.Name }}</td>
+                    <td class="py-3 px-4 border-b text-gray-700">{{ student.Room }}</td>
+                    <td class="py-3 px-4 border-b text-gray-700">{{ student.Subject }}</td>
+                    <td class="py-3 px-4 border-b text-gray-700">{{ student.Date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif query %}
+    <div class="text-center text-red-500 font-semibold mt-4">
+        ไม่พบข้อมูลสำหรับรหัสนักศึกษา: {{ query }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

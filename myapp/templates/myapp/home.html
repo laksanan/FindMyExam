@@ -1,0 +1,49 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}Home - My App{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+    <div class="text-center py-12">
+        <h1 class="text-5xl font-bold mb-6">ยินดีต้อนรับสู่ My Application</h1>
+        <p class="text-gray-600 text-xl mb-8">ตัวอย่างการใช้งาน Static Files ใน Django</p>
+        <button class="btn-primary">เริ่มต้นใช้งาน</button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+        <div class="custom-card fade-in">
+            <h3 class="text-xl font-semibold mb-3">📁 Static Files</h3>
+            <p class="text-gray-600">ไฟล์ CSS และ JavaScript ถูกโหลดจากโฟลเดอร์ static/</p>
+        </div>
+
+        <div class="custom-card fade-in">
+            <h3 class="text-xl font-semibold mb-3">🎨 Custom Styles</h3>
+            <p class="text-gray-600">ใช้ CSS แบบกำหนดเองร่วมกับ Tailwind CSS</p>
+        </div>
+
+        <div class="custom-card fade-in">
+            <h3 class="text-xl font-semibold mb-3">⚡ JavaScript</h3>
+            <p class="text-gray-600">เปิด Console เพื่อดูข้อความจาก JavaScript</p>
+        </div>
+    </div>
+
+    <div class="mt-12 p-6 bg-gray-50 rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">วิธีใช้งาน Static Files</h2>
+        <ul class="space-y-2 text-gray-700">
+            <li>✅ เพิ่ม <code class="bg-gray-200 px-2 py-1 rounded">{% load static %}</code> ที่ด้านบนของ template</li>
+            <li>✅ ใช้ <code class="bg-gray-200 px-2 py-1 rounded">{% static 'path/to/file' %}</code> เพื่ออ้างอิงไฟล์
+            </li>
+            <li>✅ วางไฟล์ใน <code class="bg-gray-200 px-2 py-1 rounded">static/</code> folder</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
